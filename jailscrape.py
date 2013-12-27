@@ -51,7 +51,7 @@ for thing in letters:
         soup = BeautifulSoup(resultspage)
     except mechanize.HTTPError, e:
         if int(e.code) != 200:
-            print "Shit's broke, fucknut. Trying again ..."
+            print "This did not work adequately. Sorry! Trying again ..."
             sleep(30)
             continue
     if resultspage:
