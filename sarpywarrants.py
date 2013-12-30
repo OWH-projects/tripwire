@@ -3,15 +3,13 @@ from bs4 import *
 from time import *
 import re
 import datetime
+import sys
+from django.core.management import setup_environ
+sys.path.append('/home/omaha/webapps/dj/myproject')
+import settings
+setup_environ(settings)
+from myproject.tripwire.models import SarpyWarrant
 
-# today
-today = str(datetime.date.today().strftime("%m-%d-%Y"))
-
-# open a file to write to
-f = open('sarpy-warrants' + today + '.txt', 'wb')
-
-# add headers to text file
-f.write('number|last|rest|dob|eyes|hair|sex|race|height|weight|address|apt|city|state|issued|type|court|agency|due|crime\n')
 
 # crank up a browser
 mech = Browser()
@@ -97,11 +95,41 @@ while (count < numwarrants):
             charges.append(crime) 
                 
         problems = ' and '.join(charges)
+
+        #Cleaning up DOB for insert into postgres
+        dobsplit = dob.split('/')
+        #Ensure first element has two characters
+        if len(dobsplit[0]) == 1:
+            dobmonth = "0" + dobsplit[0]
+        else:
+            dobmonth = dobsplit[0]
+        #Then do the same for the day
+        if len(dobsplit[1]) == 1:
+            dobday = "0" + dobsplit[0]
+        else:
+            dobday = dobsplit[0]
+        cleandob = dobsplit[2] + "-" + dobmonth + "-" + dobday
+
+        #And then cleaning up issue date, too. Dates are the worst
+        issuesplit = issued.split('/')
+        #Ensure first element has two characters
+        if len(issuesplit[0]) == 1:
+            issuemonth = "0" + issuesplit[0]
+        else:
+            issuemonth = issuesplit[0]
+        #Then do the same for the day
+        if len(issuesplit[1]) == 1:
+            issueday = "0" + issuesplit[0]
+        else:
+            issueday = issuesplit[0]
+        cleanissue = issuesplit[2] + "-" + issuemonth + "-" + issueday
+
             
-        fullrecord = (warrant_number, rest, last, dob, eyes, hair, race, sex, height, weight, address, apt, city, state, issued, status, warranttype, court, agency, due, problems, "\n")
+        #fullrecord = (warrant_number, rest, last, dob, eyes, hair, race, sex, height, weight, address, apt, city, state, issued, status, warranttype, court, agency, due, problems, "\n")
         print rest.upper() + " " + last.upper()
-            
-        f.write("|".join(fullrecord))
+        print dob
+        SarpyWarrant.objects.create(last=last, rest=rest, dob=cleandob, eyes=eyes, hair=hair, sex=sex, race=race, height=height, weight=weight, address=address, apt=apt, city=city, state=state, issued=cleanissue, type=warranttype, court=court, agency=agency, due=due, crime=problems)
+        
         count = count + 1
         
         # navigate back
@@ -110,3 +138,4 @@ while (count < numwarrants):
 
 f.flush()
 f.close()
+
