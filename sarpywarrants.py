@@ -119,9 +119,9 @@ while (count < numwarrants):
             issuemonth = issuesplit[0]
         #Then do the same for the day
         if len(issuesplit[1]) == 1:
-            issueday = "0" + issuesplit[0]
+            issueday = "0" + issuesplit[1]
         else:
-            issueday = issuesplit[0]
+            issueday = issuesplit[1]
         cleanissue = issuesplit[2] + "-" + issuemonth + "-" + issueday
 
             
