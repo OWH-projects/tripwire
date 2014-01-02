@@ -105,9 +105,9 @@ while (count < numwarrants):
             dobmonth = dobsplit[0]
         #Then do the same for the day
         if len(dobsplit[1]) == 1:
-            dobday = "0" + dobsplit[0]
+            dobday = "0" + dobsplit[1]
         else:
-            dobday = dobsplit[0]
+            dobday = dobsplit[1]
         cleandob = dobsplit[2] + "-" + dobmonth + "-" + dobday
 
         #And then cleaning up issue date, too. Dates are the worst
@@ -127,7 +127,8 @@ while (count < numwarrants):
             
         #fullrecord = (warrant_number, rest, last, dob, eyes, hair, race, sex, height, weight, address, apt, city, state, issued, status, warranttype, court, agency, due, problems, "\n")
         print rest.upper() + " " + last.upper()
-        print dob
+        print cleandob
+        print cleanissue
         SarpyWarrant.objects.create(last=last, rest=rest, dob=cleandob, eyes=eyes, hair=hair, sex=sex, race=race, height=height, weight=weight, address=address, apt=apt, city=city, state=state, issued=cleanissue, type=warranttype, court=court, agency=agency, due=due, crime=problems)
         
         count = count + 1
