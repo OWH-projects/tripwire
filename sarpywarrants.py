@@ -98,32 +98,37 @@ while (count < numwarrants):
 
         #Cleaning up DOB for insert into postgres
         dobsplit = dob.split('/')
-        #Ensure first element has two characters
-        if len(dobsplit[0]) == 1:
-            dobmonth = "0" + dobsplit[0]
+        if len(dobsplit) > 1:
+            #Ensure first element has two characters
+            if len(dobsplit[0]) == 1:
+                dobmonth = "0" + dobsplit[0]
+            else:
+                dobmonth = dobsplit[0]
+            #Then do the same for the day
+            if len(dobsplit[1]) == 1:
+                dobday = "0" + dobsplit[1]
+            else:
+                dobday = dobsplit[1]
+            cleandob = dobsplit[2] + "-" + dobmonth + "-" + dobday
         else:
-            dobmonth = dobsplit[0]
-        #Then do the same for the day
-        if len(dobsplit[1]) == 1:
-            dobday = "0" + dobsplit[1]
-        else:
-            dobday = dobsplit[1]
-        cleandob = dobsplit[2] + "-" + dobmonth + "-" + dobday
+            cleandob = '1900-01-01'
 
         #And then cleaning up issue date, too. Dates are the worst
         issuesplit = issued.split('/')
-        #Ensure first element has two characters
-        if len(issuesplit[0]) == 1:
-            issuemonth = "0" + issuesplit[0]
+        if len(issuesplit) > 1:
+            #Ensure first element has two characters
+            if len(issuesplit[0]) == 1:
+                issuemonth = "0" + issuesplit[0]
+            else:
+                issuemonth = issuesplit[0]
+            #Then do the same for the day
+            if len(issuesplit[1]) == 1:
+                issueday = "0" + issuesplit[1]
+            else:
+                issueday = issuesplit[1]
+            cleanissue = issuesplit[2] + "-" + issuemonth + "-" + issueday
         else:
-            issuemonth = issuesplit[0]
-        #Then do the same for the day
-        if len(issuesplit[1]) == 1:
-            issueday = "0" + issuesplit[1]
-        else:
-            issueday = issuesplit[1]
-        cleanissue = issuesplit[2] + "-" + issuemonth + "-" + issueday
-
+            cleanissue = '1900-01-01'
             
         #fullrecord = (warrant_number, rest, last, dob, eyes, hair, race, sex, height, weight, address, apt, city, state, issued, status, warranttype, court, agency, due, problems, "\n")
         print rest.upper() + " " + last.upper()

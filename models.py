@@ -4,7 +4,7 @@ class SarpyWarrant(models.Model):
     last = models.CharField(max_length=50, null=True, blank=True)
     rest = models.CharField(max_length=50, null=True, blank=True)
     dob = models.DateField()
-    eyes = models.CharField(max_length=4, null=True, blank=True)
+    eyes = models.CharField(max_length=15, null=True, blank=True)
     hair = models.CharField(max_length=4, null=True, blank=True)
     sex = models.CharField(max_length=1, null=True, blank=True)
     race = models.CharField(max_length=4, null=True, blank=True)
