@@ -259,7 +259,7 @@ for thing in letters:
         print "Returning ..."
         sleep(1)
             
-    counter = 0
+    counter = 1
     while counter < 5:
         try:
             page = mech.open(baseurl)
