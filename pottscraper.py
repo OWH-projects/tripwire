@@ -39,25 +39,68 @@ table = soup.find('table', {'width': '90%'})
 
 for row in table.findAll('tr')[1:]:
     col = row.findAll('td')
-    rawname = col[0].get_text(strip=True)
-    last = rawname.split(', ')[0]
-    first = rawname.split(', ')[1]
+    
+    try:
+        rawname = col[0].get_text(strip=True).upper()
+        last = rawname.split(', ')[0]
+        first = rawname.split(', ')[1]
+    except:
+        last = "MCGURT"
+        first = "TURD"
+   
     print first, last
-    date_conf = col[1].get_text(strip=True)
-    time_conf = col[2].get_text(strip=True)
-    age = col[3].get_text(strip=True)
-    height = col[4].get_text(strip=True)
-    weight = col[5].get_text(strip=True)
-    sex = col[6].get_text(strip=True)
-    race = col[7].get_text(strip=True)
+    
+    try:
+        date_conf = col[1].get_text(strip=True)
+    except:
+        date_conf = "Not reported"
+    
+    try:
+        time_conf = col[2].get_text(strip=True)
+    except:
+        time_conf = "Not reported"
+    
+    try:
+        age = col[3].get_text(strip=True)
+    except:
+        age = "Not reported"
+    
+    try:
+        height = col[4].get_text(strip=True)
+    except:
+        height = "Not reported"
+    
+    try:
+        weight = col[5].get_text(strip=True)
+    except:
+        weight = "Not reported"
+    
+    try:
+        sex = col[6].get_text(strip=True)
+    except:
+        sex = "Not reported"
+        
+    try:
+        race = col[7].get_text(strip=True)
+    except:
+        race = "Not reported"
+    
     # pipe delimiters for multiple crimes
-    for e in col[8].findAll('br'):
-        e.replace_with(" | ")
-    charges = col[8].get_text(strip=True).rstrip('|')
+    try:
+        for e in col[8].findAll('br'):
+            e.replace_with(" | ")
+        charges = col[8].get_text(strip=True).rstrip('|')
+    except:
+        charges = "Not reported"
+        
     # and for multiple bond amounts
-    for e in col[9].findAll('br'):
-        e.replace_with(" | ")
-    bond = col[9].get_text(strip=True).rstrip('|')
+    try:
+        for e in col[9].findAll('br'):
+            e.replace_with(" | ")
+        bond = col[9].get_text(strip=True).rstrip('|')
+    except:
+        bond = "Not reported"
+        
     fullrec = (last, first, date_conf, time_conf, age, height, weight, sex, race, charges, bond, '\n')
     f.write("\t".join(fullrec))
     sleep(1)
