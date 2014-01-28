@@ -26,9 +26,10 @@ while counter < 5:
         counter += 1
         sleep(30)
 
-html = str(page.read())
+html = page.read()
 print "Reading page."
 
+# un-comment table cells
 clean_html = html.replace("<!--","").replace("-->","")
 
 soup = BeautifulSoup(clean_html)
@@ -49,9 +50,11 @@ for row in table.findAll('tr')[1:]:
     weight = col[5].get_text(strip=True)
     sex = col[6].get_text(strip=True)
     race = col[7].get_text(strip=True)
+    # pipe delimiters for multiple crimes
     for e in col[8].findAll('br'):
         e.replace_with(" | ")
     charges = col[8].get_text(strip=True).rstrip('|')
+    # and for multiple bond amounts
     for e in col[9].findAll('br'):
         e.replace_with(" | ")
     bond = col[9].get_text(strip=True).rstrip('|')
