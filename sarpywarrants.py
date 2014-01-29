@@ -5,7 +5,7 @@ import re
 import datetime
 import sys
 from django.core.management import setup_environ
-sys.path.append('/home/omaha/webapps/dj/myproject')
+sys.path.append('/home/mwynn/django_projects/myproject')
 import settings
 setup_environ(settings)
 from myproject.tripwire.models import SarpyWarrant
@@ -141,7 +141,4 @@ while (count < numwarrants):
         # navigate back
         mech.back()
         sleep(1)
-
-f.flush()
-f.close()
 

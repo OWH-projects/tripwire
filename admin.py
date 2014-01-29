@@ -1,5 +1,5 @@
 from django.contrib import admin
-from myproject.tripwire.models import *
+from tripwire.models import *
 
 class InmateAdmin(admin.ModelAdmin):
     list_display = ('rest', 'last', 'age', 'crime', 'admissiondate', )
