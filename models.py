@@ -43,3 +43,5 @@ class Name(models.Model):
     first = models.CharField(max_length=50, null=True, blank=True)
     last = models.CharField(max_length=50)
 
+class Subscribers(models.Model):
+    email = models.EmailField()
